@@ -22,13 +22,10 @@ namespace Tennis
                 score = options[player1Points];
                 return (player1Points == player2Points) ? score + "-All" : score + "-" + options[player2Points];
             }
-            else
-            {
-                if (player1Points == player2Points)
-                    return "Deuce";
-                score = player1Points > player2Points ? player1Name : player2Name;
-                return ((player1Points - player2Points) * (player1Points - player2Points) == 1) ? "Advantage " + score : "Win for " + score;
-            }
+            if (player1Points == player2Points)
+                return "Deuce";
+            score = player1Points > player2Points ? player1Name : player2Name;
+            return ((player1Points - player2Points) * (player1Points - player2Points) == 1) ? "Advantage " + score : "Win for " + score;
         }
 
         public void WonPoint(string playerName)
