@@ -23,24 +23,31 @@ namespace Tennis
         {
             if (player1.Score == player2.Score)
             {
-                if (player1.Score < 3)
+                return GetScoreWhenPlayersEqual();
+            }
+            if (player1.Score >= 4 || player2.Score >= 4)
+            {
+                return PlayerScoreAboveFour();
+            }
+            return $"{IntScoreToString(player1.Score)}-{IntScoreToString(player2.Score)}";
+        }
+
+        private string GetScoreWhenPlayersEqual()
+        {
+            if(player1.Score < 3)
                 {
-                    return $"{IntScoreToString(player1.Score)}-All";
-                }
-                return "Deuce";
+                return $"{IntScoreToString(player1.Score)}-All";
             }
-            else if (player1.Score >= 4 || player2.Score >= 4)
-            {
-                var minusResult = player1.Score - player2.Score;
-                if (minusResult == 1) return "Advantage player1";
-                else if (minusResult == -1) return "Advantage player2";
-                else if (minusResult >= 2) return "Win for player1";
-                else return "Win for player2";
-            }
-            else
-            {
-                return $"{IntScoreToString(player1.Score)}-{IntScoreToString(player2.Score)}";
-            }
+            return "Deuce";
+        }
+
+        private string PlayerScoreAboveFour()
+        {
+            var minusResult = player1.Score - player2.Score;
+            if (minusResult == 1) return "Advantage player1";
+            else if (minusResult == -1) return "Advantage player2";
+            else if (minusResult >= 2) return "Win for player1";
+            else return "Win for player2";
         }
 
         private string IntScoreToString(int score)
