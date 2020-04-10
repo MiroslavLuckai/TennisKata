@@ -13,31 +13,51 @@ namespace Tennis
 
         public string GetScore()
         {
-            if (player1.Score == player2.Score && player1.Score < 3)
+            if (IsPlayersScoreEqual() && IsPlayersScoreLowerThen(3))
             {
                 return $"{TennisUtils.IntScoreToString(player1.Score)}-All";
             }
-            if (player1.Score == player2.Score && player1.Score > 2)
+            if (IsPlayersScoreEqual() && IsPlayersScoreHigherThen(2))
             {
                 return "Deuce";
             }
-            if (player1.Score < 4 && player2.Score < 4)
+            if (IsPlayersScoreLowerThen(4))
             {
                 return $"{TennisUtils.IntScoreToString(player1.Score)}-{TennisUtils.IntScoreToString(player2.Score)}";
             }
-            if ((player1.Score - player2.Score) >= 2)
+            if (GetScoreDifference() >= 2)
             {
                 return "Win for player1";
             }
-            if ((player1.Score - player2.Score) <= -2)
+            if (GetScoreDifference() <= -2)
             {
                 return "Win for player2";
             }
-            if (player1.Score > player2.Score)
+            if (GetScoreDifference() == 1)
             {
                 return "Advantage player1";
             }
             return "Advantage player2";
+        }
+
+        private bool IsPlayersScoreEqual()
+        {
+            return player1.Score == player2.Score;
+        }
+
+        private bool IsPlayersScoreLowerThen(int limit)
+        {
+            return player1.Score < limit && player2.Score < limit;
+        }
+
+        private bool IsPlayersScoreHigherThen(int limit)
+        {
+            return player1.Score > limit && player2.Score > limit;
+        }
+
+        private int GetScoreDifference()
+        {
+            return player1.Score - player2.Score;
         }
 
         public void WonPoint(string playerName)

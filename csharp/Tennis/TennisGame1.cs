@@ -25,11 +25,11 @@ namespace Tennis
 
         public string GetScore()
         {
-            if (player1.Score == player2.Score)
+            if (IsPlayersScoreEqual())
             {
                 return GetScoreWhenPlayersEqual();
             }
-            if (player1.Score >= 4 || player2.Score >= 4)
+            if (IsAnyScoreHigherthenThree())
             {
                 return PlayerScoreAboveFour();
             }
@@ -52,6 +52,16 @@ namespace Tennis
             else if (minusResult == -1) return "Advantage player2";
             else if (minusResult >= 2) return "Win for player1";
             else return "Win for player2";
+        }
+
+        private bool IsPlayersScoreEqual()
+        {
+            return player1.Score == player2.Score;
+        }
+
+        private bool IsAnyScoreHigherthenThree()
+        {
+            return player1.Score >= 4 || player2.Score >= 4;
         }
     }
 }
