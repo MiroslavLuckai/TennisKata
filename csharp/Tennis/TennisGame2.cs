@@ -24,20 +24,15 @@ namespace Tennis
             {
                 return "Deuce";
             }
-            if (p1point > 0 && p2point == 0 && p1point < 4)
+            if (p2point == 0 && p1point < 4)
             {
                 return $"{TennisUtils.IntScoreToString(p1point)}-Love";
             }
-            if (p2point > 0 && p1point == 0 && p2point < 4)
+            if (p1point == 0 && p2point < 4)
             {
                 return $"Love-{TennisUtils.IntScoreToString(p2point)}";
             }
-
-            if (p1point > p2point && p1point < 4)
-            {
-                return $"{TennisUtils.IntScoreToString(p1point)}-{TennisUtils.IntScoreToString(p2point)}";
-            }
-            if (p2point > p1point && p2point < 4)
+            if (p1point < 4 && p2point < 4)
             {
                 return $"{TennisUtils.IntScoreToString(p1point)}-{TennisUtils.IntScoreToString(p2point)}";
             }
@@ -59,22 +54,6 @@ namespace Tennis
                 return "Advantage player2";
             }
             return string.Empty;
-        }
-
-        public void SetP1Score(int number)
-        {
-            for (int i = 0; i < number; i++)
-            {
-                P1Score();
-            }
-        }
-
-        public void SetP2Score(int number)
-        {
-            for (var i = 0; i < number; i++)
-            {
-                P2Score();
-            }
         }
 
         private void P1Score()
