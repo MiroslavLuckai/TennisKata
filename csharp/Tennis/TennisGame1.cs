@@ -2,38 +2,36 @@ namespace Tennis
 {
     class TennisGame1 : ITennisGame
     {
-        private int m_score1 = 0;
-        private int m_score2 = 0;
-        private string player1Name;
-        private string player2Name;
+        private readonly Player player1;
+        private readonly Player player2;
 
         public TennisGame1(string player1Name, string player2Name)
         {
-            this.player1Name = player1Name;
-            this.player2Name = player2Name;
+            player1 = new Player(player1Name);
+            player2 = new Player(player2Name);
         }
 
         public void WonPoint(string playerName)
         {
-            if (playerName == "player1")
-                m_score1 += 1;
+            if (playerName == player1.Name)
+                player1.IncreaseScoreByOne();
             else
-                m_score2 += 1;
+                player2.IncreaseScoreByOne();
         }
 
         public string GetScore()
         {
-            if (m_score1 == m_score2)
+            if (player1.Score == player2.Score)
             {
-                if (m_score1 < 3)
+                if (player1.Score < 3)
                 {
-                    return $"{IntScoreToString(m_score1)}-All";
+                    return $"{IntScoreToString(player1.Score)}-All";
                 }
                 return "Deuce";
             }
-            else if (m_score1 >= 4 || m_score2 >= 4)
+            else if (player1.Score >= 4 || player2.Score >= 4)
             {
-                var minusResult = m_score1 - m_score2;
+                var minusResult = player1.Score - player2.Score;
                 if (minusResult == 1) return "Advantage player1";
                 else if (minusResult == -1) return "Advantage player2";
                 else if (minusResult >= 2) return "Win for player1";
@@ -41,7 +39,7 @@ namespace Tennis
             }
             else
             {
-                return $"{IntScoreToString(m_score1)}-{IntScoreToString(m_score2)}";
+                return $"{IntScoreToString(player1.Score)}-{IntScoreToString(player2.Score)}";
             }
         }
 
