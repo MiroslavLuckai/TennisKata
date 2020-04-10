@@ -14,9 +14,13 @@ namespace Tennis
         public void WonPoint(string playerName)
         {
             if (playerName == player1.Name)
+            {
                 player1.IncreaseScoreByOne();
+            }
             else
+            {
                 player2.IncreaseScoreByOne();
+            }                
         }
 
         public string GetScore()
@@ -29,14 +33,14 @@ namespace Tennis
             {
                 return PlayerScoreAboveFour();
             }
-            return $"{IntScoreToString(player1.Score)}-{IntScoreToString(player2.Score)}";
+            return $"{TennisUtils.IntScoreToString(player1.Score)}-{TennisUtils.IntScoreToString(player2.Score)}";
         }
 
         private string GetScoreWhenPlayersEqual()
         {
             if(player1.Score < 3)
-                {
-                return $"{IntScoreToString(player1.Score)}-All";
+            {
+                return $"{TennisUtils.IntScoreToString(player1.Score)}-All";
             }
             return "Deuce";
         }
@@ -48,23 +52,6 @@ namespace Tennis
             else if (minusResult == -1) return "Advantage player2";
             else if (minusResult >= 2) return "Win for player1";
             else return "Win for player2";
-        }
-
-        private string IntScoreToString(int score)
-        {
-            switch (score)
-            {
-                case 0:
-                    return "Love";
-                case 1:
-                    return "Fifteen";
-                case 2:
-                    return "Thirty";
-                case 3:
-                    return "Forty";
-                default:
-                    return string.Empty;
-            }
         }
     }
 }
