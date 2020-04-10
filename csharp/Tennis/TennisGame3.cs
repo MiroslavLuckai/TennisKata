@@ -1,3 +1,5 @@
+using System;
+
 namespace Tennis
 {
     public class TennisGame3 : ITennisGame
@@ -16,16 +18,30 @@ namespace Tennis
 
         public string GetScore()
         {
-            string score;
-            if ((player1Points < 4 && player2Points < 4) && (player1Points + player2Points < 6))
+            if (PlayersPointsLessThanFour() && (player1Points + player2Points < 6))
             {
-                score = options[player1Points];
-                return (player1Points == player2Points) ? score + "-All" : score + "-" + options[player2Points];
+                string score = options[player1Points];
+                return PlayersPointsEqual() ? score + "-All" : score + "-" + options[player2Points];
             }
-            if (player1Points == player2Points)
+            if (PlayersPointsEqual())
                 return "Deuce";
-            score = player1Points > player2Points ? player1Name : player2Name;
-            return ((player1Points - player2Points) * (player1Points - player2Points) == 1) ? "Advantage " + score : "Win for " + score;
+            string betterPlayer = player1Points > player2Points ? player1Name : player2Name;
+            return (AbsoluteValueOfPlayersScoreDifference() == 1) ? "Advantage " + betterPlayer : "Win for " + betterPlayer;
+        }
+
+        private bool PlayersPointsEqual()
+        {
+            return player1Points == player2Points;
+        }
+
+        private bool PlayersPointsLessThanFour()
+        {
+            return player1Points < 4 && player2Points < 4;
+        }
+
+        private int AbsoluteValueOfPlayersScoreDifference()
+        {
+            return Math.Abs(player1Points - player2Points);
         }
 
         public void WonPoint(string playerName)
