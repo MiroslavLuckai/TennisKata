@@ -16,30 +16,40 @@ namespace Tennis
 
         public string GetScore()
         {
-            if (PlayersPointsLessThanFour() && (player1.Score + player2.Score < 6))
+            if (IsPlayersPointsLessThanFour() && !IsPlayersScoreEqualAndHigherThenTwo())
             {
                 string score = options[player1.Score];
-                return PlayersPointsEqual() ? score + "-All" : score + "-" + options[player2.Score];
+                return IsPlayersPointsEqual() ? $"{score}-All" : $"{score}-{options[player2.Score]}";
             }
-            if (PlayersPointsEqual())
+            if (IsPlayersPointsEqual())
                 return "Deuce";
-            string betterPlayer = player1.Score > player2.Score ? player1.Name : player2.Name;
-            return (AbsoluteValueOfPlayersScoreDifference() == 1) ? "Advantage " + betterPlayer : "Win for " + betterPlayer;
+            string betterPlayer = GetNameOfPlayerWithBetterScore();
+            return (GetAbsoluteValueOfPlayersScoreDifference() == 1) ? $"Advantage {betterPlayer}" : $"Win for {betterPlayer}";
         }
 
-        private bool PlayersPointsEqual()
+        private bool IsPlayersPointsEqual()
         {
             return player1.Score == player2.Score;
         }
 
-        private bool PlayersPointsLessThanFour()
+        private bool IsPlayersScoreEqualAndHigherThenTwo()
+        {
+            return player1.Score == player2.Score && player1.Score > 2;
+        }
+
+        private bool IsPlayersPointsLessThanFour()
         {
             return player1.Score < 4 && player2.Score < 4;
         }
 
-        private int AbsoluteValueOfPlayersScoreDifference()
+        private int GetAbsoluteValueOfPlayersScoreDifference()
         {
             return Math.Abs(player1.Score - player2.Score);
+        }
+
+        private string GetNameOfPlayerWithBetterScore()
+        {
+            return player1.Score > player2.Score ? player1.Name : player2.Name;
         }
 
         public void WonPoint(string playerName)
