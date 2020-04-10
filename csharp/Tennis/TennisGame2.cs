@@ -2,63 +2,50 @@ namespace Tennis
 {
     public class TennisGame2 : ITennisGame
     {
-        private int p1point;
-        private int p2point;
-        private string player1Name;
-        private string player2Name;
+        private readonly Player player1;
+        private readonly Player player2;
 
         public TennisGame2(string player1Name, string player2Name)
         {
-            this.player1Name = player1Name;
-            p1point = 0;
-            this.player2Name = player2Name;
+            this.player1 = new Player(player1Name);
+            this.player2 = new Player(player2Name);
         }
 
         public string GetScore()
         {
-            if (p1point == p2point && p1point < 3)
+            if (player1.Score == player2.Score && player1.Score < 3)
             {
-                return $"{TennisUtils.IntScoreToString(p1point)}-All";
+                return $"{TennisUtils.IntScoreToString(player1.Score)}-All";
             }
-            if (p1point == p2point && p1point > 2)
+            if (player1.Score == player2.Score && player1.Score > 2)
             {
                 return "Deuce";
             }
-            if (p1point < 4 && p2point < 4)
+            if (player1.Score < 4 && player2.Score < 4)
             {
-                return $"{TennisUtils.IntScoreToString(p1point)}-{TennisUtils.IntScoreToString(p2point)}";
+                return $"{TennisUtils.IntScoreToString(player1.Score)}-{TennisUtils.IntScoreToString(player2.Score)}";
             }
-            if ((p1point - p2point) >= 2)
+            if ((player1.Score - player2.Score) >= 2)
             {
                 return "Win for player1";
             }
-            if ((p2point - p1point) >= 2)
+            if ((player1.Score - player2.Score) <= -2)
             {
                 return "Win for player2";
             }
-            if (p1point > p2point)
+            if (player1.Score > player2.Score)
             {
                 return "Advantage player1";
             }
             return "Advantage player2";
         }
 
-        private void P1Score()
+        public void WonPoint(string playerName)
         {
-            p1point++;
-        }
-
-        private void P2Score()
-        {
-            p2point++;
-        }
-
-        public void WonPoint(string player)
-        {
-            if (player == "player1")
-                P1Score();
+            if (playerName == player1.Name)
+                player1.IncreaseScoreByOne();
             else
-                P2Score();
+                player2.IncreaseScoreByOne();
         }
 
     }
