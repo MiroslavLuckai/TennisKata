@@ -4,53 +4,50 @@ namespace Tennis
 {
     public class TennisGame3 : ITennisGame
     {
-        private int player2Points;
-        private int player1Points;
-        private string player1Name;
-        private string player2Name;
+        private readonly Player player1;
+        private readonly Player player2;
         private readonly string[] options = { "Love", "Fifteen", "Thirty", "Forty" };
 
         public TennisGame3(string player1Name, string player2Name)
         {
-            this.player1Name = player1Name;
-            this.player2Name = player2Name;
+            this.player1 = new Player(player1Name);
+            this.player2 = new Player(player2Name);
         }
 
         public string GetScore()
         {
-            if (PlayersPointsLessThanFour() && (player1Points + player2Points < 6))
+            if (PlayersPointsLessThanFour() && (player1.Score + player2.Score < 6))
             {
-                string score = options[player1Points];
-                return PlayersPointsEqual() ? score + "-All" : score + "-" + options[player2Points];
+                string score = options[player1.Score];
+                return PlayersPointsEqual() ? score + "-All" : score + "-" + options[player2.Score];
             }
             if (PlayersPointsEqual())
                 return "Deuce";
-            string betterPlayer = player1Points > player2Points ? player1Name : player2Name;
+            string betterPlayer = player1.Score > player2.Score ? player1.Name : player2.Name;
             return (AbsoluteValueOfPlayersScoreDifference() == 1) ? "Advantage " + betterPlayer : "Win for " + betterPlayer;
         }
 
         private bool PlayersPointsEqual()
         {
-            return player1Points == player2Points;
+            return player1.Score == player2.Score;
         }
 
         private bool PlayersPointsLessThanFour()
         {
-            return player1Points < 4 && player2Points < 4;
+            return player1.Score < 4 && player2.Score < 4;
         }
 
         private int AbsoluteValueOfPlayersScoreDifference()
         {
-            return Math.Abs(player1Points - player2Points);
+            return Math.Abs(player1.Score - player2.Score);
         }
 
         public void WonPoint(string playerName)
         {
-            if (playerName == player1Name)
-                this.player1Points++;
+            if (playerName == player1.Name)
+                player1.IncreaseScoreByOne();
             else
-                this.player2Points++;
-        }
+                player2.IncreaseScoreByOne();       }
 
     }
 }
