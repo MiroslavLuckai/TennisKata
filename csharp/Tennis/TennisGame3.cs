@@ -6,6 +6,7 @@ namespace Tennis
         private int player1Points;
         private string player1Name;
         private string player2Name;
+        private readonly string[] options = { "Love", "Fifteen", "Thirty", "Forty" };
 
         public TennisGame3(string player1Name, string player2Name)
         {
@@ -18,7 +19,6 @@ namespace Tennis
             string score;
             if ((player1Points < 4 && player2Points < 4) && (player1Points + player2Points < 6))
             {
-                string[] options = { "Love", "Fifteen", "Thirty", "Forty" };
                 score = options[player1Points];
                 return (player1Points == player2Points) ? score + "-All" : score + "-" + options[player2Points];
             }
@@ -33,10 +33,10 @@ namespace Tennis
 
         public void WonPoint(string playerName)
         {
-            if (playerName == "player1")
-                this.player1Points += 1;
+            if (playerName == player1Name)
+                this.player1Points++;
             else
-                this.player2Points += 1;
+                this.player2Points++;
         }
 
     }
