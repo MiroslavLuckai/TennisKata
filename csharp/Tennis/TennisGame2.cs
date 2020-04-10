@@ -4,9 +4,6 @@ namespace Tennis
     {
         private int p1point;
         private int p2point;
-
-        private string p1res = "";
-        private string p2res = "";
         private string player1Name;
         private string player2Name;
 
@@ -19,54 +16,49 @@ namespace Tennis
 
         public string GetScore()
         {
-            var score = "";
             if (p1point == p2point && p1point < 3)
             {
-                score = TennisUtils.IntScoreToString(p1point);
-                score += "-All";
+                return $"{TennisUtils.IntScoreToString(p1point)}-All";
             }
             if (p1point == p2point && p1point > 2)
-                score = "Deuce";
-
-            if (p1point > 0 && p2point == 0)
             {
-                p2res = "Love";
-                score = $"{TennisUtils.IntScoreToString(p1point)}-{p2res}";
+                return "Deuce";
             }
-            if (p2point > 0 && p1point == 0)
+            if (p1point > 0 && p2point == 0 && p1point < 4)
             {
-                p1res = "Love";
-                score = $"{p1res}-{TennisUtils.IntScoreToString(p2point)}";
+                return $"{TennisUtils.IntScoreToString(p1point)}-Love";
+            }
+            if (p2point > 0 && p1point == 0 && p2point < 4)
+            {
+                return $"Love-{TennisUtils.IntScoreToString(p2point)}";
             }
 
             if (p1point > p2point && p1point < 4)
             {
-                score = $"{TennisUtils.IntScoreToString(p1point)}-{TennisUtils.IntScoreToString(p2point)}";
+                return $"{TennisUtils.IntScoreToString(p1point)}-{TennisUtils.IntScoreToString(p2point)}";
             }
             if (p2point > p1point && p2point < 4)
             {
-                score = $"{TennisUtils.IntScoreToString(p1point)}-{TennisUtils.IntScoreToString(p2point)}";
+                return $"{TennisUtils.IntScoreToString(p1point)}-{TennisUtils.IntScoreToString(p2point)}";
             }
-
+            if (p1point >= 4 && p2point >= 0 && (p1point - p2point) >= 2)
+            {
+                return "Win for player1";
+            }
+            if (p2point >= 4 && p1point >= 0 && (p2point - p1point) >= 2)
+            {
+                return "Win for player2";
+            }
             if (p1point > p2point && p2point >= 3)
             {
-                score = "Advantage player1";
+                return "Advantage player1";
             }
 
             if (p2point > p1point && p1point >= 3)
             {
-                score = "Advantage player2";
+                return "Advantage player2";
             }
-
-            if (p1point >= 4 && p2point >= 0 && (p1point - p2point) >= 2)
-            {
-                score = "Win for player1";
-            }
-            if (p2point >= 4 && p1point >= 0 && (p2point - p1point) >= 2)
-            {
-                score = "Win for player2";
-            }
-            return score;
+            return string.Empty;
         }
 
         public void SetP1Score(int number)
